@@ -7,7 +7,6 @@ const store = configureStore({
         user:newuserreducer,
         movie:MovieReducer
     },
-    // enhancers: [composeWithDevTools()],
 })
 
 
