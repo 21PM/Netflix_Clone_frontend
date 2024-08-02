@@ -95,3 +95,28 @@ netflix-clone-yt/
 
 
 
+
+
+ 1.Below is the Sign up page
+ ![image](https://github.com/user-attachments/assets/b32611c0-c9c3-479c-9390-17b19b3b1f55)
+
+2. Below is the Login Page Screenshot
+ 
+![image](https://github.com/user-attachments/assets/3ccbec99-d01b-4454-97e5-3b77e263db1a)
+
+3.Hero Page screenshot
+ ![image](https://github.com/user-attachments/assets/e649445e-5bf8-4d2f-b390-b908b2d4fdf5)
+
+
+4.Now Playing and Popular movie view
+ ![image](https://github.com/user-attachments/assets/339b8902-a076-406e-8bfc-5a839311f49f)
+
+5.Top Rated and Upcoming movie view
+ ![image](https://github.com/user-attachments/assets/977a2360-69d2-46db-a48d-34959ed3dde2)
+
+6.Search Movie page view
+![image](https://github.com/user-attachments/assets/0cc45a9e-dbb8-4799-bef0-d155e583fff2)
+
+ 
+
+
