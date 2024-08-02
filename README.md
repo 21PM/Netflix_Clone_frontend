@@ -20,6 +20,10 @@ Backend: Node.js, Express.js, MongoDB, JWT
 Styling: Tailwind CSS, Material-UI
 Others: Axios for API calls, React Hot Toast for notifications
 
+Hosted Link :
+https://netflix-clone-frontend-nu.vercel.app/
+
+
 ## Installation Instructions
 Backend Setup
 Clone the backend repository:
