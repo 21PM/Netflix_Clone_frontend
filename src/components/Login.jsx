@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import axios from "axios"
 import { API_END_POINT } from '../utils/API'
@@ -28,84 +28,109 @@ function handleLogin(){
     SetisLogin(!isLogin)
   }
 
-  const handleoform = async (e)=>{
-      e.preventDefault()
+  useEffect(() => {
 
-      if(isLogin){
+    if(!user){
+      return;
+    }
 
-        if(!email || !password){
-          toast.error("Please enter email Id and password")
-            return;
-          
+    const fetchUserData = async () => {
+      try {
+        const res = await axios.get(`${API_END_POINT}/verify-token`, {
+          withCredentials: true,
+        });
+        if (res.data.status) {
+          dispatch(setUser(res.data.user));
+          navigate('/browse');
         }
-      Setloading(true)
-
-        // IF USER CLICK ON LOGIN THEN LOGIN API WILL BE CALLED
-        const user = {email,password}
-        try{
-          const res = await axios.post(`${API_END_POINT}/login`,user,{
-            headers:{
-              "Content-Type":"application/json"
-            },
-            withCredentials:true
-          })
-
-          dispatch(setUser(res.data.user))
-
-          console.log(res);
-          if(res.data.status){
-
-            toast.success("You are login successfully")
-          }
-          
-          navigate("/browse")
-
-        }catch(e){
-          console.log(e);
-          toast.error("Invalid user Id or password")
-        }finally{
-          Setloading(false)
-        }
-
-      }else{
-
-        // IF USER CLICK ON SIGN UP THEN REGISTRATION API WILL BE CALLED
-        
-      if(!email || !password || !fullName){
-        toast.error("Please enter all the details as per below form")
-        return;
+      } catch (e) {
+        console.log(e);
+        navigate('/');
       }
-      Setloading(true)
+    };
+    fetchUserData();
+  }, [dispatch, navigate]);
 
-        const newUserData = {
-          fullName,
-          email,
-          password
-        }
+  if(!user){
+    return;
+  }
 
+  const handleoform = async (e)=>{
+    e.preventDefault()
+
+    if(isLogin){
+
+      if(!email || !password){
+        toast.error("Please enter email Id and password")
+          return; 
+      }
+    Setloading(true)
+
+      // IF USER CLICK ON LOGIN THEN LOGIN API WILL BE CALLED
+      const user = {email,password}
       try{
-        const res = await axios.post(`${API_END_POINT}/register`,newUserData,{
+        const res = await axios.post(`${API_END_POINT}/login`,user,{
           headers:{
             "Content-Type":"application/json"
           },
           withCredentials:true
-        });
+        })
+
+        dispatch(setUser(res.data.user))
+
+        console.log(res);
         if(res.data.status){
 
-          toast.success("Account created sucessfully")
+          toast.success("You are login successfully")
         }
-        SetisLogin(!isLogin)
         
+        navigate("/browse")
+
       }catch(e){
-          console.log(e);
-          toast.error(`unable to create account ${e.response.data.message}`)
+        console.log(e);
+        toast.error("Invalid user Id or password")
       }finally{
         Setloading(false)
       }
+
+    }else{
+
+      // IF USER CLICK ON SIGN UP THEN REGISTRATION API WILL BE CALLED
+      
+    if(!email || !password || !fullName){
+      toast.error("Please enter all the details as per below form")
+      return;
+    }
+    Setloading(true)
+
+      const newUserData = {
+        fullName,
+        email,
+        password
       }
 
-  }
+    try{
+      const res = await axios.post(`${API_END_POINT}/register`,newUserData,{
+        headers:{
+          "Content-Type":"application/json"
+        },
+        withCredentials:true
+      });
+      if(res.data.status){
 
+        toast.success("Account created sucessfully")
+      }
+      SetisLogin(!isLogin)
+      
+    }catch(e){
+        console.log(e);
+        toast.error(`unable to create account ${e.response.data.message}`)
+    }finally{
+      Setloading(false)
+    }
+    }
+
+}
 
   return (
     <>
