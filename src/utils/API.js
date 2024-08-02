@@ -1,4 +1,4 @@
-export const API_END_POINT = "http://localhost:10000/user"
+export const API_END_POINT = "https://netflix-clone-backend-otwi.onrender.com/user"
 
 export const options = {
     method: 'GET',
