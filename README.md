@@ -71,6 +71,8 @@ netflix-clone-yt/
 │   ├── package-lock.json
 │   ├── package.json
 └── └── ...
+![image](https://github.com/user-attachments/assets/152570b0-78db-4db7-9dce-f0c7979d6d4c)
+
 
 Frontend folder structure
 netflix-clone-yt/
@@ -89,5 +91,7 @@ netflix-clone-yt/
 │   ├── vercel.json
 │   ├── vite.config.js
 └── └── README.md
+![image](https://github.com/user-attachments/assets/6ffbc9a3-0022-4300-92a2-a0f458f096c5)
+
 
 
