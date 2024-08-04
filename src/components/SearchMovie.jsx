@@ -52,11 +52,11 @@ function SearchMovie() {
 
   return (
         <>
-            <div className='min-h-screen pb-10 bg-blue bg-cover bg-center' style={{
+            <div className='min-h-screen pb-10 bg-blue bg-cover bg-center bg-blue-800' style={{
         backgroundImage: "url('https://www.the-sun.com/wp-content/uploads/sites/6/2024/07/esc-netflix-off-platform-copy.jpg?strip=all&quality=100&w=1920&h=1080&crop=1)"
       }}>
             <Header/>
-            <div className='flex justify-center gap-4 pt-[10%] '>
+            <div className='flex justify-center gap-4 desktop:pt-[10%] 2xl:pt-[10%] lg:pt-[18%] md:pt-[23%] sm:pt-[25%] xs:pt-[28%]  2xs:pt-[30%]'>
             <input type='text' placeholder='Search Movies...' className='border-2 border-black w-3/12 px-4 rounded-lg'onChange={(e)=>SetSearchValue(e.target.value)}></input>
             <button className='bg-red-700 py-3 px-4 font-bold text-white hover:opacity-80 hover:bg-transparent hover:text-white hover:border-4  rounded-md' onClick={searchMovie}>Search</button> 
             </div>

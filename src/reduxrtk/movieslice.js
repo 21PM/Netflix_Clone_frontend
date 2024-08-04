@@ -36,7 +36,8 @@ const movieSlice = createSlice({
         },
         getSelectedMovieId:(state,action)=>{
             state.selectedMovieId = action.payload;
-        }
+        },
+
     }
 })
 

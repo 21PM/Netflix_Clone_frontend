@@ -3,7 +3,7 @@ import Header from './Header'
 import axios from "axios"
 import { API_END_POINT } from '../utils/API'
 import toast from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
+import { json, useNavigate } from 'react-router-dom'
 import { useSelector,useDispatch } from 'react-redux'
 import { setUser } from '../reduxrtk/userslice'
 
@@ -11,8 +11,6 @@ function Login() {
 
 
   const user = useSelector(store=>store.user)
-
-  // console.log(user);
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -30,30 +28,41 @@ function handleLogin(){
 
   useEffect(() => {
 
-    if(!user){
-      return;
-    }
 
-    const fetchUserData = async () => {
-      try {
-        const res = await axios.get(`${API_END_POINT}/verify-token`, {
-          withCredentials: true,
-        });
-        if (res.data.status) {
-          dispatch(setUser(res.data.user));
-          navigate('/browse');
+    // Check for existing local storage token on initial render
+    const localToken = localStorage.getItem("ntftoken");
+
+    if (localToken && !user) {
+      const fetchUserData = async () => {
+        try {
+          const res = await axios.get(`${API_END_POINT}/verify-token`, {
+            headers: {
+              Authorization: `Bearer ${localToken}`,
+            },
+          });
+
+          console.log(res);
+          
+          if (res.status === 200) {
+
+            dispatch(setUser(res.data.user));
+            navigate('/browse');
+          } else {
+            // Handle invalid token case (clear local storage token)
+            localStorage.removeItem("ntftoken");
+            localStorage.removeItem("ntfuser");
+            navigate('/'); // Redirect to login on invalid token
+          }
+        } catch (e) {
+          console.log(e);
+          navigate('/');
         }
-      } catch (e) {
-        console.log(e);
-        navigate('/');
-      }
-    };
-    fetchUserData();
-  }, [dispatch, navigate]);
+      };
 
-  if(!user){
-    return;
-  }
+      fetchUserData();
+    }
+  }, []);
+
 
   const handleoform = async (e)=>{
     e.preventDefault()
@@ -75,10 +84,13 @@ function handleLogin(){
           },
           withCredentials:true
         })
-
+        // console.log(res.data.token);
+        
         dispatch(setUser(res.data.user))
+        localStorage.setItem("ntfuser",JSON.stringify(res.data.user))
+        localStorage.setItem("ntftoken",JSON.stringify(res.data.token))
 
-        console.log(res);
+        // console.log(res);
         if(res.data.status){
 
           toast.success("You are login successfully")
@@ -140,7 +152,7 @@ function handleLogin(){
         <img className='w-[100vw] h-[100vh]'
         src='https://wallpapers.com/images/high/netflix-background-gs7hjuwvv2g0e9fj.webp' alt='Netflix Background Image'></img>
     </div>
-    <form onSubmit={handleoform} className="flex flex-col w-3/12 p-12 my-36 left-0 right-0 mx-auto  bg-black items-center justify-center absolute opacity-70">
+    <form onSubmit={handleoform} className="flex flex-col 2xl:w-3/12 desktop:w-3/12 xl:w-3/12 p-12 my-36 left-0 right-0 mx-auto md:w-6/12 bg-black items-center justify-center absolute opacity-70">
         <h1 className='text-3xl text-white mb-5 font-bold'>{isLogin ? "Login" : "Sign up"}</h1>
         <div className='flex flex-col'>
           {

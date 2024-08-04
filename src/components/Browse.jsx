@@ -7,6 +7,8 @@ import  {getNowPlayingMovies,getPoplularMovies,getTopRatedMovies,getUpcomingMovi
 import { options } from '../utils/API'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { API_END_POINT } from '../utils/API'
+import { setUser } from '../reduxrtk/userslice'
 import axios from 'axios'
 
 function Browse() {
@@ -17,16 +19,16 @@ function Browse() {
   
   const user = useSelector(store=>store.user.user)
 
-  if(!user){
-    navigate("/")
-
-  }
+  // if(!user){
+  //   navigate("/")
+  // }
 
   const nowPlayingMovies = useSelector(store=>store.movie.nowPlayingMovies)
   const PopularMovies = useSelector(store=>store.movie.PopularMovies)
   const TopRatedMovies = useSelector(store=>store.movie.TopRatedMovies)
   const UpcomingMovies = useSelector(store=>store.movie.UpcomingMovies)
   const dispatch = useDispatch();
+
 
     useEffect(()=>{
       if(!user){
@@ -57,16 +59,10 @@ function Browse() {
       console.log(IsSearch);
     },[IsSearch,user])
 
-    
-
-    // console.log(PopularMovies);
-    // console.log(TopRatedMovies);
-    // console.log(UpcomingMovies);
-
 
   return (
     <>
-        <div>
+        <div className='max-w-full h-full desktop:w-full lg:w-full sm:w-full xs:w-full 2xs:w-full border-2 bg-black border-black'>
         <Header/>
         <div>
         <HeroContainer/>
